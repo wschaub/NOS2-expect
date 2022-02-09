@@ -62,9 +62,8 @@ proc mount { unit tape {ring ""} } {
 }
 
 proc unmount { unit } {
-    global dtcyber
-    send -i $dtcyber "ut $unit\r"
-    expect -i $dtcyber {
+    send "ut $unit\r"
+    expect  {
         "Successfully unloaded" exp_continue
         "not loaded" exp_continue
         "Not enough or invalid parameters" { error_condition "unmount $unit " }
