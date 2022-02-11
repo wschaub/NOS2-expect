@@ -1,98 +1,14 @@
 #!/usr/bin/expect -f
-set force_conservative 0  ;# set to 1 to force conservative mode even if
-			  ;# script wasn't run conservatively originally
-if {$force_conservative} {
-	set send_slow {1 .1}
-	proc send {ignore arg} {
-		sleep .1
-		exp_send -s -- $arg
-	}
+::tcl::tm::path add .
+package require DtCyber;
+namespace import DtCyber::*
+trap int_handler { SIGINT }
+
+proc int_handler {} {
+    error_condition "sigint recieved"
 }
 
-proc error_condition { cmd } {
-    send_user "***** error condition encountered *******\n"
-    send_user "trying to execute $cmd\n"
-    send_user "entering interact mode type interp to get an interpreter\n"
-    interact "interp\r" { interpreter } 
-}
-
-
-proc console { cmd } {
-    if {$cmd eq "shutdown"} {
-       send -- "shutdown\r"
-       expect "Shutting down main thread"
-       wait 
-       exit 0
-    }
-    send -- "$cmd\r"
-    expect {
-        "Command not implemented" { error_condition "console $cmd" }
-        "Not enough or invalid parameters" { error_condition "console $cmd" }
-        "Failed to open" { error_condition "console $cmd" }
-        -re "\nOperator> $" {}
-    }
-    sleep 1
-}
-
-proc dsd { cmd } {
-    console "e $cmd"
-}
-
-proc mount { unit tape {ring ""} } {
-    if {$ring eq ""} {
-        send -- "lt $unit,r,$tape\r"
-        expect  {
-            "Successfully loaded $tape" exp_continue
-            "Failed to open" { error_condition "mount $unit $tape" }
-            "Not enough or invalid parameters" { error_condition "mount $unit $tape" }
-            "Invalid" { error_condition "mount $unit $tape" }
-        -re "\nOperator> $" {}
-        }
-    } else {
-        send "lt $unit,w,$tape\r"
-        expect {
-            "Successfully loaded $tape" exp_continue
-            "Failed to open" { error_condition "mount $unit $tape ring" }
-            "Not enough or invalid parameters" { error_condition "mount $unit $tape ring" }
-            "Invalid" { error_condition "mount $unit $tape ring" }
-        -re "\nOperator> $" {}
-        }
-    }
-    sleep 1
-}
-
-proc unmount { unit } {
-    send "ut $unit\r"
-    expect  {
-        "Successfully unloaded" exp_continue
-        "not loaded" exp_continue
-        "Not enough or invalid parameters" { error_condition "unmount $unit " }
-        "Invalid" { error_condition "unmount $unit" }
-    -re "\nOperator> $" {}
-    }
-    sleep 1
-}
-
-proc check_job { ident } {
-    global printer
-    if { $printer eq ""} {
-        puts "Something went very wrong"
-        exit 1
-    }
-    expect {
-        -i $printer -nocase "\\* $ident FAILED" { error_condition "job $ident failed" }
-        -i $printer -nocase "\\* $ident COMPLETE" {}
-    }
-}
-set timeout -1
-spawn ./dtcyber
-set dtcyber $spawn_id
-match_max 100000
-expect "Operator> "
-spawn tail -F LP5xx_C07_E7
-set printer $spawn_id
-set spawn_id $dtcyber
-sleep 1
+DtCyber::init
 dsd ""
 sleep 3
 dsd "#1000#%year%%mon%%day%;%hour%%min%%sec%"
@@ -101,28 +17,38 @@ mount "13,0,2" "nos287-2.tap"
 mount "13,0,3" "nos287-3.tap"
 sleep 8
 console "lc 11,7,y2kjobs/nosy2k.txt"
-error_condition "test"
-expect {
-    -i $printer "NOSY2K FAILED" { error_condition "nosy2k job failed" }
-    -i $printer "NOSY2K COMPLETE" {}
-}
+check_job nosy2k
 console "rp 7,7"
 console "lc 11,7,y2kjobs/nam5.txt"
-expect {
-    -i $printer "NAM5Y2K FAILED" { error_condition "nosy2k job failed" }
-    -i $printer "NAM5Y2K COMPLETE" {}
-}
+check_job nam5y2k
 console "rp 7,7"
 console "lc 11,7,y2kjobs/smdnam5.txt"
-expect {
-    -i $printer "SMDNAM5 FAILED" { error_condition "nosy2k job failed" }
-    -i $printer "SMDNAM5 COMPLETE" {}
-}
+check_job smdnam5
 console "rp 7,7"
-error_condition "test"
+console "lc 11,7,y2kjobs/cha1.txt"
+check_job chay2k
+console "rp 7,7"
+console "lc 11,7,y2kjobs/tcph.txt"
+check_job tcphy2k
+console "rp 7,7"
+console "lc 11,7,y2kjobs/rhp.txt"
+check_job rhpy2k
+console "rp 7,7"
+console "lc 11,7,y2kjobs/atf.txt"
+check_job atfy2k
+console "rp 7,7"
+console "lc 11,7,y2kjobs/cdcs2.txt"
+check_job cdcs2y2k
+console "rp 7,7"
+console "lc 11,7,y2kjobs/qu3.txt"
+check_job qu3y2k
+console "rp 7,7"
+error_condition "all jobs completed successfully"
 dsd  "idle,mag."
+sleep 3
 dsd "\[unlock."
 dsd "che"
-sleep 4
+sleep 5
 dsd "step."
+sleep 1
 console "shutdown"
