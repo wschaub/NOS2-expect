@@ -7,7 +7,7 @@ setjsl(*)
 block./rhpy2k/date
 * since modpl has already ran
 * nothing needs to be done other than build rhp.
-begin,rhp,install.
+begin,rhp,install,subsys=both.
 * rhpy2k complete
 exit.
 * rhpy2k failed
