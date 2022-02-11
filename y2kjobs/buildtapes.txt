@@ -1,0 +1,60 @@
+tapegen.
+user(install,install)
+setjsl(*)
+settl(*)
+copybr(input,in)
+copybr(input,modin)
+rewind(in,modin)
+block./tape/generation/date
+purge(vy2kds/na)
+purge(y2kds/na)
+block./build pf/tape
+* build pf file tape
+label(tape,vsn=pfy2k,fi=$updated source$,po=uw,w)
+reclaim,i=in.
+* merge product with intds into tmpds
+attach(intds)
+assign(ms,tmpds)
+block./merge/product/with intds
+begin,gendst,install,system=intds,new=tmpds,list=output.
+rewind(tmpds)
+block./build/virgin/tape
+* take tmpds and build virgin deadstart with y2k patches but
+* no updated recldb
+attach(opl=opl871)
+modify,i=modin.
+rewind(compile)
+define(vy2kds)
+libedit,p=tmpds,n=vy2kds,b=compile.
+BLOCK./BUILD/Y2KDS WITH/NEW RECLDB
+* build new recldb ulib and merge it with tmpds into y2kds
+define(y2kds)
+gtr(intds,foo)ulib/recldb
+gtr(foo,zzzproc)proc/zzzproc
+return,in.
+note(in);dump,fn=recldb,df=archive,dn=archive
+reclaim,db=0,i=in.
+rewind(archive,zzzproc)
+copybr(zzzproc,lgo)
+copybr(archive,lgo,3)
+rewind(lgo)
+ulib,c,lgo,recldb.
+rewind(tmpds)
+libedit(p=tmpds,n=y2kds,b=recldb.
+* tapegeny2k complete
+exit.
+* tapegeny2k failed
+~eor
+remove,tn=pfy2k,un=ns2871,na
+dump,fn=*,tn=pfy2k,un=ns2871,ei=no
+pfgtlib,pfgnamd,opl871,atf1871,cdcs871,cha1871,qu31871
+end
+~eor
+*edit cmrdeck
+*edit eor1
+*edit eqpdeck
+*edit eor2
+*edit iprdeck
+*edit eor3
+*edit libdeck
+~eor

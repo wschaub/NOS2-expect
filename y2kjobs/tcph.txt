@@ -1,0 +1,13 @@
+tcphy2k.
+user(install,install)
+settl(*)
+setjsl(*)
+block./tcphy2k/date
+* rebuild tcph to pull in changes to 
+* comcchg in opl871
+* this job must be run after a successful cha1 build.
+begin,tcph,install.
+* tcphy2k complete
+exit.
+* tcph failed
+~eoi

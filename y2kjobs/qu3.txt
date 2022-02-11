@@ -1,0 +1,23 @@
+qu3y2k.
+user(install,install)
+settl(*)
+setjsl(*)
+block./qu3y2k/date
+* apply Y2K patches to QU3 PL
+* build QU3
+* this job must be run after CDCS2 is rebuilt.
+get,y2kqu.
+purge(qu31871/na)
+reclaim.
+rename(oldpl=qu31871)
+define(qu31871)
+update,p=oldpl,n=qu31871,i=y2kqu,c=0,s=0,f.
+return,qu31871,oldpl.
+begin,qu3,install.
+* qu3y2k complete
+exit.
+* qu3y2k failed
+~eor
+copy,fn=qu31871,tn=bc004p,un=ns2871
+end
+~eoi

@@ -1,0 +1,141 @@
+nosy2k.
+user(install,install)
+settl(*)
+setjsl(*)
+block./nosy2k/date
+* surgical patch of NOS core for y2k
+* applies y2knos,normbin,hpabin
+* from y2k871 tape
+* applies 0PIMSFX to allow multi-spindle to work. 
+* early on
+* XdisabledXX applies LEAPFIX and CLOKFIX from pauls svn
+* run this first.
+get,y2knos.
+purge(opl871/na)
+purge(intds/na)
+purge(intmods/na)
+define(intds/na)
+copybr(y2knos,intmods,999)
+skipr(input,2)
+copybr(input,intmods)
+attach(hpabin,normbin)
+block./seed
+begin,seed,install,dst=cy871b.
+rewind(intmods)
+replace(intmods)
+block./modopl
+begin,modopl,install,userf=intmods.
+attach(opl=opl871)
+block./nosy2k/listings
+modify.
+compass(i=compile,s=nostext)
+skipei(lgo)
+copybr(hpabin,lgo,999)
+copybr(normbin,lgo,999)
+rewind(lgo)
+block./libedit/of intds
+return,cy871b.
+attach,cy871b.
+libedit,p=cy871b,n=intds,b=lgo.
+* nosy2k complete
+exit.
+* nosy2k failed
+dayfile.
+~eor
+LEAPFIX
+*IDENT leapfix
+*deck cpumtr
+*d 253L688.667,253L688.672
+          BX7    X7-X7
+*i NS2797.4
+          bx6    x2
+          mx7    -2
+          lx6    -30         position year to bottom
+          bx7    -x7*x6
+          sx7    x7-2
+          SX6    28          RESET FEBRUARY *TDLM* ENTRY
+          nz     x7,adt2.1   if not leap year
+          sx6    29
+ adt2.1   sa6    tdlm+2      set february length
+*d NS2797.19
+ adt2.0   bx4    x2
+          lx4    -24+18
+          bx4    -x7*x4
+          sa4    x4+tdlm     get day limit for current month
+*d 253L688.703,253L688.704
+          ix6    x4-x6
+          pl     x6,adt3     if not end of month
+*d 253L688.711,253L688.713
+*d 253L688.721
+*d 253L688.722,253L688.727
+*d 253L688.820
+*deck mtr
+*d NS2726.40
+*deck dsd
+*d DSD.3377,dsd.3378
+*d DSD.3425,dsd.3427
+*d dsd.17515
+*d dsd.17525,dsd.17526
+*d DSD.18272,DSD.18274
+*d DSD.18336,DSD.18337
+*/ end leapfix
+~eor
+FIXCLOK
+*IDENT fixclok
+*deck mtr
+*d mtr.503,mtr.506
+ TIM2     ADC    -MLSC       CYCLES TILL RTCL WRITTEN
+*d MTR47.2,271L716.1346
+*d 271L716.1394,271L716.1400
+~eor
+0PIMSFX
+*IDENT    0PIMSFX  WNS.        21/04/13.
+*/        ****   NOS 2.8.7-871
+*/        ****   CONFLICTS - 6DI34. 
+*/        *****  PPROBLEM - REC HANGS ON MULTISPINDLE EQS WITH MORE
+*/        THAN TWO PHYSICAL DEVICES.
+*/ 
+*/        EQ025=DI,UN=0-3,CH=22.
+*/        DEFINES A LOGICAL DEVICE MADE UP OF 4 PHYSICAL DEVICES
+*/        BUT REC HANGS CALLING LDAM IN SUBROUTINE PSP IN 
+*/        OVERLAY 0PI
+*/        
+*/        THIS IS BECAUSE OF ADDITIONS DONE IN NS2776 FOR CDSS II
+*/        SUPPORT AND HOW SUBR PSP HANDLES T7
+*/
+*/        SOLUTION - SAVE T7 VALUE FROM PRESET FOR USE LATER
+*/        IN PSP SUBROUTINE. THIS SHOULD ALLLOW MULTI-SPINDLE 
+*/        TO WORK WITHOUT IMPACTING CDSS II SUPPORT.
+*/         
+*/        
+*/        CAVEOTS  - I DO NOT HAVE A CDSS II TO TEST WITH
+*/        SO TAKE CAUTION IF USING ON A CDSS II EQUIPED SYSTEM.
+*/        
+*/        
+*/        MODULES AFFECTED: 0PI.
+*/         
+*/        DEPENDENCIES:     NS2776.
+*/         
+*/         
+*/         
+*DECK     6DI
+*/ 
+*INSERT   NS2776.66
+*         SAVE FACTORY SECTOR NUMBER FOR PSP
+          STM    FSN
+*INSERT   6DI.3948
+*         RESERVE SPACE FOR STORING FACTORY SECTOR NUMBER
+ FSN     BSS     1
+*/        DELETE COMMENT ABOUT NEEDING T7 SET FOR ENTRY. 
+*DELETE   NS2776.68
+*INSERT   6DI.3894
+*         FSN IS SET DURING PRS EXECUTION, SEE COMMENTS THERE
+          LDM    FSN  SET FACTORY SECTOR NUMBER
+          STD    T7 
+*/        END OF MODSET *0PIMSFX*.
+~eor
+*edit dsd
+*edit cpumtr
+*edit valex
+*edit 6di
+~eoi

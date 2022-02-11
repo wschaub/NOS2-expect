@@ -1,0 +1,18 @@
+nam5y2k.
+user(install,install)
+settl(*)
+setjsl(*)
+block./nam5y2k/date
+* build nam5 as pre-requisite to 
+* products being re-built for y2k.
+purge(pfgnamd/na)
+reclaim.
+block./nam5/load maps
+begin,nam5,install.
+*** nam5y2k complete
+exit.
+*** nam5y2k failed
+~eor
+load,fn=pfgnamd,un=ns2871
+end
+~eoi

@@ -1,0 +1,22 @@
+cha1y2k.
+user(install,install)
+* rebuild cha1 with y2k patches
+* and apply patches to PL
+block./cha1y2k/date
+settl(*)
+setjsl(*)
+purge(cha1871/na)
+reclaim.
+rename(oldpl=cha1871)
+get,y2kcha.
+define(cha1871)
+update(p=oldpl,n=cha1871,i=y2kcha,c=0,s=0,f)
+return,oldpl,cha1871.
+begin,cha1,install.
+* chay2k complete
+exit.
+* chay2k failed
+~eor
+copy,fn=cha1871,tn=bc004p,un=ns2871
+end
+~eoi

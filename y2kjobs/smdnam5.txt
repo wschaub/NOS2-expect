@@ -1,0 +1,29 @@
+smdnam5.
+user(install,install)
+settl(*)
+setjsl(*)
+block./smdnam5/date
+* attempt to build the PFGNAMD file.
+purge(pfgnamd/na)
+copybr(input,smdnam5)
+block./nam5d/full/listing
+smdnam5.
+return,smdpfg.
+change(pfgnamd=smdpfg)
+*** smdnam5 complete
+exit.
+*** smdnam5 failed
+~eor
+.proc,smdnam5.
+.* SMD build proc for NAM5D
+.* WNS. 02/09/2022
+$set(r1g = 1)
+begin,seed,install,dst=intds.
+purge(smdpfg/na)
+define(smdpfg)
+.* enable IMS for listing
+note(mymods,nr);*ident wsenims
+note(mymods,nr);*define ims
+begin,nam5d,install,list=output,userf=mymods.
+revert.
+~eoi

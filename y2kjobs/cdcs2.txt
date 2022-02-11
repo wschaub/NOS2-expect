@@ -1,0 +1,22 @@
+cdcs2.
+user(install,install)
+* update cdcs2 PL with y2k patches
+* build cdcs2 with y2k patches
+block./cdcs2 y2k/date
+settl(*)
+setjsl(*)
+get,y2kcdcs.
+purge(CDCS871/na)
+reclaim.
+rename(oldpl=CDCS871)
+define(cdcs871)
+update,p=oldpl,i=y2kcdcs,n=cdcs871,c=0,s=0,f.
+return,oldpl,cdcs871.
+begin,cdcs2,install.
+* cdcs2y2k complete
+exit.
+* cdcs2y2k failed
+~eor
+copy,fn=cdcs871,un=ns2871
+end
+~eoi

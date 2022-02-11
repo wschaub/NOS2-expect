@@ -1,0 +1,14 @@
+rhpy2k.
+user(install,install)
+settl(*)
+setjsl(*)
+* build rhp to pull in y2k fixes
+* from comcchg in opl871
+block./rhpy2k/date
+* since modpl has already ran
+* nothing needs to be done other than build rhp.
+begin,rhp,install.
+* rhpy2k complete
+exit.
+* rhpy2k failed
+~eoi

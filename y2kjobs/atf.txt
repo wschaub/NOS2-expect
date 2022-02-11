@@ -1,0 +1,22 @@
+atfy2k.
+user(install,install)
+settl(*)
+setjsl(*)
+block./atfy2k/date
+* update atf PL with y2k patches
+* build new atf
+get,y2katf.
+purge(atf1871/na)
+reclaim.
+rename(oldpl=atf1871)
+define(atf1871)
+update,p=oldpl,n=atf1871,i=y2katf,c=0,s=0,f.
+return,oldpl,atf1871.
+begin,atf,install.
+* atfy2k complete
+exit.
+* atfy2k failed
+~eor
+copy,fn=atf1871,tn=bc004p,un=ns2871
+end
+~eoi
