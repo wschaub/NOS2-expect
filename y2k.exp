@@ -18,31 +18,35 @@ mount "13,0,3" "nos287-3.tap"
 sleep 8
 console "lc 11,7,y2kjobs/nosy2k.txt"
 check_job nosy2k
-console "rp 7,7"
+console "rp 7,7,logs/nosy2k.txt"
 console "lc 11,7,y2kjobs/nam5.txt"
 check_job nam5y2k
-console "rp 7,7"
+console "rp 7,7,logs/nam5.txt"
 console "lc 11,7,y2kjobs/smdnam5.txt"
 check_job smdnam5
-console "rp 7,7"
+console "rp 7,7,logs/smdnam5.txt"
 console "lc 11,7,y2kjobs/cha1.txt"
 check_job chay2k
-console "rp 7,7"
+console "rp 7,7,logs/cha1.txt"
 console "lc 11,7,y2kjobs/tcph.txt"
 check_job tcphy2k
-console "rp 7,7"
+console "rp 7,7,logs/tcph.txt"
 console "lc 11,7,y2kjobs/rhp.txt"
 check_job rhpy2k
-console "rp 7,7"
+console "rp 7,7,logs/rhp.txt"
 console "lc 11,7,y2kjobs/atf.txt"
 check_job atfy2k
-console "rp 7,7"
+console "rp 7,7,logs/atf.txt"
 console "lc 11,7,y2kjobs/cdcs2.txt"
 check_job cdcs2y2k
-console "rp 7,7"
+console "rp 7,7,logs/cdcs2.txt"
 console "lc 11,7,y2kjobs/qu3.txt"
 check_job qu3y2k
-console "rp 7,7"
+console "rp 7,7logs/qu3.txt"
+mount 31,0,0 tmppfs.tap ring
+console "lc 11,7,y2kjobs/buildtapes.txt"
+check_job tapegeny2k
+console "rp 7,7,logs/buildtapes.txt"
 error_condition "all jobs completed successfully"
 dsd  "idle,mag."
 sleep 3
