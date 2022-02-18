@@ -73,7 +73,7 @@ expect  {
     -i $printer "\\*\\* CY871B FAILED" { error_condition "cy871b job failed" }
     -i $printer "\\*\\* CY871B LOADED" {}
 }
-console "rp 7,7"
+console "rp 7,7,logs/nos_install.txt"
 sleep 3
 dsd  "idle,mag."
 dsd "\[unlock."
