@@ -11,7 +11,7 @@ purge(y2kds/na)
 block./build pf/tape
 * build pf file tape
 label(tape,vsn=pfy2k,fi=$updated source$,po=uw,w)
-reclaim,i=in.
+reclaim,i=in,na.
 * merge product with intds into tmpds
 attach(intds)
 assign(ms,tmpds)
