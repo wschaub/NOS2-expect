@@ -6,9 +6,11 @@ block./nosy2k/date
 * surgical patch of NOS core for y2k
 * applies y2knos,normbin,hpabin
 * from y2k871 tape
-* applies 0PIMSFX to allow multi-spindle to work. 
-* early on
-* XdisabledXX applies LEAPFIX and CLOKFIX from pauls svn
+* non-CDC mods:
+* applies 0PIMSFX to allow multi-spindle 
+* to work early on
+* applies LEAPFIX and CLOKFIX from pauls svn
+* applies NCC2202 from Kevin Jordan
 * run this first.
 get,y2knos.
 purge(opl871/na)
@@ -16,8 +18,7 @@ purge(intds/na)
 purge(intmods/na)
 define(intds/na)
 copybr(y2knos,intmods,999)
-skipr(input,2)
-copybr(input,intmods)
+copybr(input,intmods,4)
 attach(hpabin,normbin)
 block./seed
 begin,seed,install,dst=cy871b.
@@ -134,8 +135,39 @@ FIXCLOK
           STD    T7 
 */        END OF MODSET *0PIMSFX*.
 ~eor
+NCC2202
+*IDENT NCC2202
+*/
+*/ CHECK FOR DEVICE UNAVAILABLE DUE TO UNFINISHED RECOVERY OF
+*/ MASS STORAGE ON A FAST SYSTEM SUCH AS A CYBER 865. IF *PFM*
+*/ RETURNS AN ERROR STATUS INDICATING THAT THE DEVICE ON WHICH
+*/ THE LIDCM FILE IS STORED IS UNAVAILABLE, RELEASE THE CPU
+*/ AND TRY AGAIN AFTER BEING ASSIGNED TO THE CPU AGAIN.
+*/ WITHOUT THIS MODIFICATION, *CLDT* SOMETIMES EXITS DURING
+*/ DEADSTART WITHOUT INITIALIZING THE PID/LID TABLE PROPERLY.
+*/
+*DECK CLDT
+*I 1877
+
+ PRS2.1   BSS    0
+*I 1883
+          AX4    52
+          SX6    X4-/ERRMSG/PFN
+          ZR     X6,PRS2.2   IF DEVICE UNAVAILABLE
+          SX6    X4-/ERRMSG/PFA
+          NZ     X6,PRS2.3   IF PF UTILITY NOT ACTIVE
+
+ PRS2.2   BSS    0
+          RECALL
+          EQ     PRS2.1
+
+ PRS2.3   BSS    0
+*/ END NCC2202
+~eor
+*edit mtr
 *edit dsd
 *edit cpumtr
 *edit valex
 *edit 6di
+*edit cldt
 ~eoi
