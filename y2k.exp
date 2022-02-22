@@ -7,7 +7,7 @@ trap int_handler { SIGINT }
 proc int_handler {} {
     error_condition "sigint recieved"
 }
-
+system "rm -f built-tapes/*"
 DtCyber::init
 dsd ""
 sleep 3

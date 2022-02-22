@@ -7,7 +7,9 @@ trap int_handler { SIGINT }
 proc int_handler {} {
     error_condition "sigint recieved"
 }
-
+system "rm -f Disks/*"
+system "rm -f PersistStore/*"
+system "rm -f logs/*"
 DtCyber::init
 #error_condition "test"
 dsd "o!"
