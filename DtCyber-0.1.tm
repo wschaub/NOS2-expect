@@ -3,7 +3,7 @@
       lassign [split $modver -] ::pkgtemp::ns ::pkgtemp::version
   }
   package provide $::pkgtemp::ns [namespace eval $::pkgtemp::ns {
-      namespace export error_condition console dsd mount umount check_job
+      namespace export error_condition console dsd mount umount check_job profile printer_file
       variable version $::pkgtemp::version
       #initialise your module's namespace here (or in the next namespace eval block if desired)
       set version ;#this statement must be the last line in this block (version number is returned to the 'package provide' statement)
@@ -11,6 +11,8 @@
   namespace eval $::pkgtemp::ns {
       #module procs here
 
+set profile ""
+set printer_file "LP5xx_C07_E7"
 #print error message and return control to user
 proc error_condition { cmd } {
     send_user "***** error condition encountered *******\n"
@@ -104,11 +106,11 @@ proc check_job { ident } {
 proc init {} {
     namespace eval :: {
         set timeout -1
-        spawn ./dtcyber
+        spawn ./dtcyber $DtCyber::profile
         set dtcyber $spawn_id
         match_max 100000
         expect "Operator> "
-        spawn tail -F LP5xx_C07_E7
+        spawn tail -F $DtCyber::printer_file
         set printer $spawn_id
         set spawn_id $dtcyber
         sleep 1
