@@ -1,0 +1,94 @@
+#!/usr/bin/expect -f
+::tcl::tm::path add .
+package require DtCyber;
+namespace import DtCyber::*
+trap int_handler { SIGINT }
+
+proc int_handler {} {
+    error_condition "sigint recieved"
+}
+system "rm -f stage1/Disks/*"
+system "rm -f stage1/PersistStore/*"
+system "rm -f logs/*"
+system "rm -f tmp.tap"
+set DtCyber::profile "stage1"
+set DtCyber::printer_file "LP5xx_C12_E5"
+DtCyber::init 
+#error_condition "test"
+dsd "o!"
+dsd "p!"
+dsd "i=0"
+dsd "d=yes"
+dsd ""
+dsd "next."
+dsd "\]!"
+dsd "EQ006=DQ,UN=0,CH=1."
+dsd "EQ007=DQ,UN=1,CH=1."
+dsd "EQ020=LQ,EQ=5,CH=12,TN=4."
+dsd "EQ030=CR,EQ=7,CH=11."
+dsd "EQ050=NT-10,EQ=0,UN=0,CH=13,TF=ATS."
+dsd "\]\]!"
+dsd "initialize,al,6,7."
+dsd "go."
+dsd "#1000#991225;%hour%%min%%sec%"
+mount "13,0,1" "original-tapes/nos287-1.tap"
+mount "13,0,2" "original-tapes/nos287-2.tap"
+mount "13,0,3" "original-tapes/nos287-3.tap"
+expect -i $printer "QUEUE FILE UTILITY COMPLETE"
+send_user "\rDeadstart complete now launching sysgen(full)\r\r"
+dsd "x.sysgen(full)"
+expect -i $printer "E N D   F U L L"
+send_user "\r Full sysgen complete now launching sysgen(source)\r\r"
+dsd "xsysgen(source)"
+expect -i $printer "E N D   S O U R C E"
+dsd "unload,050."
+mount "13,0,0" "original-tapes/y2k.tap"
+send_user "\r\rSysgen Complete\r\r"
+dsd "x.dis."
+dsd "user(install,install)"
+dsd "settl(*)"
+dsd "setjsl(*)"
+dsd ",_load,tn=y2k871,un=ns2871"
+dsd "load,fn=*,un=ns2871"
+dsd "opl871"
+dsd "end"
+dsd "^^dis."
+dsd "els.reclaim."
+dsd "change,opl871/ct=pu,ac=y."
+dsd {[drop.}
+expect -i $printer "Y2KNOS  I 99/05/20  99/05/20      11   NS2871    Y2K871   1   8"
+expect -i $printer "OPL871  D 99/12/09  99/12/09   87369   NS2871    BC004P   1  51"
+expect -i $printer "RECLAIM COMPLETE."
+expect -i $printer "CHANGE,OPL871/CT=PU,AC=Y."
+dsd "unload,050."
+mount "13,0,0" "original-tapes/cy871b.tap"
+dsd "vsn050,cy871b."
+dsd "x.dis."
+dsd "user(install,install)"
+dsd "els.label(tape,vsn=cy871b,lb=ku,f=i,po=r)"
+dsd "define(cy871b)"
+dsd "copyei(tape,cy871b,v)"
+dsd "** cy871b loaded"
+dsd "dayfile."
+dsd "exit."
+dsd "** cy871b failed"
+dsd "dayfile."
+dsd {[drop.}
+expect  {
+    -i $printer "\\*\\* CY871B FAILED" { error_condition "cy871b job failed" }
+    -i $printer "\\*\\* CY871B LOADED" {}
+}
+console "lc 11,7,y2kjobs/nosy2k.txt"
+check_job nosy2k
+mount 13,0,4 tmp.tap ring
+dsd "vsn054,tmpds."
+console "lc 11,7,stage1jobs/tmpds.txt"
+check_job tmpds
+console "rp 12,5,logs/stage1.txt"
+sleep 3
+dsd  "idle,mag."
+dsd "\[unlock."
+dsd "che"
+sleep 4
+dsd "step."
+console "shutdown"

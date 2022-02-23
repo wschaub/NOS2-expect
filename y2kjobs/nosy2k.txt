@@ -13,7 +13,7 @@ block./nosy2k/date
 * applies NCC2202 from Kevin Jordan
 * run this first.
 get,y2knos.
-purge(opl871/na)
+* purge(opl871/na)
 purge(intds/na)
 purge(intmods/na)
 define(intds/na)

@@ -1,0 +1,16 @@
+wrtapes.
+user(install,install)
+settl(*)
+setjsl(*)
+resourc(ge=4)
+label(vy2k,vsn=vy2k,lb=ku,f=i,po=w)
+label(y2k,vsn=y2k,lb=ku,f=i,po=w)
+attach(vy2kds)
+attach(y2kds)
+copyei(vy2kds,vy2k,v)
+copyei(y2kds,y2k,v)
+* wrtapes complete
+dayfile.
+exit.
+* wrtapes failed
+~eoi

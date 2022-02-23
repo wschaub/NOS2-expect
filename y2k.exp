@@ -8,45 +8,56 @@ proc int_handler {} {
     error_condition "sigint recieved"
 }
 system "rm -f built-tapes/*"
+set DtCyber::profile "stage2"
+set DtCyber::printer_file "LP5xx_C12_E5"
 DtCyber::init
 dsd ""
 sleep 3
 dsd "#1000#%year%%mon%%day%;%hour%%min%%sec%"
-mount "13,0,1" "nos287-1.tap"
-mount "13,0,2" "nos287-2.tap"
-mount "13,0,3" "nos287-3.tap"
+mount "13,0,1" "original-tapes/nos287-1.tap"
+mount "13,0,2" "original-tapes/nos287-2.tap"
+mount "13,0,3" "original-tapes/nos287-3.tap"
 sleep 8
 console "lc 11,7,y2kjobs/nosy2k.txt"
 check_job nosy2k
-console "rp 7,7,logs/nosy2k.txt"
+console "rp 12,5,logs/nosy2k.txt"
 console "lc 11,7,y2kjobs/nam5.txt"
 check_job nam5y2k
-console "rp 7,7,logs/nam5.txt"
+console "rp 12,5,logs/nam5.txt"
 console "lc 11,7,y2kjobs/smdnam5.txt"
 check_job smdnam5
-console "rp 7,7,logs/smdnam5.txt"
+console "rp 12,5,logs/smdnam5.txt"
 console "lc 11,7,y2kjobs/cha1.txt"
 check_job chay2k
-console "rp 7,7,logs/cha1.txt"
+console "rp 12,5,logs/cha1.txt"
 console "lc 11,7,y2kjobs/tcph.txt"
 check_job tcphy2k
-console "rp 7,7,logs/tcph.txt"
+console "rp 12,5,logs/tcph.txt"
 console "lc 11,7,y2kjobs/rhp.txt"
 check_job rhpy2k
-console "rp 7,7,logs/rhp.txt"
+console "rp 12,5,logs/rhp.txt"
 console "lc 11,7,y2kjobs/atf.txt"
 check_job atfy2k
-console "rp 7,7,logs/atf.txt"
+console "rp 12,5,logs/atf.txt"
 console "lc 11,7,y2kjobs/cdcs2.txt"
 check_job cdcs2y2k
-console "rp 7,7,logs/cdcs2.txt"
+console "rp 12,5,logs/cdcs2.txt"
 console "lc 11,7,y2kjobs/qu3.txt"
 check_job qu3y2k
-console "rp 7,7logs/qu3.txt"
-mount 31,0,0 tmppfs.tap ring
+console "rp 12,5,logs/qu3.txt"
+mount 13,0,4 built-tapes/tmppfs.tap ring
+dsd "vsn054,pfy2k."
 console "lc 11,7,y2kjobs/buildtapes.txt"
 check_job tapegeny2k
-console "rp 7,7,logs/buildtapes.txt"
+console "rp 12,5,logs/buildtapes.txt"
+dsd "unload,054."
+mount 13,0,4 built-tapes/vy2kds.tap ring
+mount 13,0,5 built-tapes/y2kds.tap ring
+dsd "vsn054,vy2k."
+dsd "vsn055,y2k."
+console "lc 11,7,y2kjobs/write-tapes.txt"
+check_job wrtapes
+console "rp 12,5,logs/write-tapes.txt"
 error_condition "all jobs completed successfully"
 dsd  "idle,mag."
 sleep 3

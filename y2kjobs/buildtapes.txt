@@ -40,7 +40,15 @@ copybr(archive,lgo,3)
 rewind(lgo)
 ulib,c,lgo,recldb.
 rewind(tmpds)
-libedit(p=tmpds,n=y2kds,b=recldb.
+return,lgo.
+* copy eqpd15 and iprd00 from running system.
+common(system)
+gtr(system,lgo)eqpd15
+gtr(system,lgo)iprd00
+skipei(lgo)
+rewind(recldb)
+copyei(recldb,lgo)
+libedit(p=tmpds,n=y2kds,b=lgo.
 * tapegeny2k complete
 exit.
 * tapegeny2k failed
