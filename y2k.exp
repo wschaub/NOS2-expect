@@ -58,7 +58,9 @@ dsd "vsn055,y2k."
 console "lc 11,7,y2kjobs/write-tapes.txt"
 check_job wrtapes
 console "rp 12,5,logs/write-tapes.txt"
-error_condition "all jobs completed successfully"
+#error_condition "all jobs completed successfully"
+dsd "idle,nam."
+sleep 5
 dsd  "idle,mag."
 sleep 3
 dsd "\[unlock."
