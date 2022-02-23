@@ -1,0 +1,18 @@
+ndljob.
+user(netadmn,netadmn)
+copybf(input,ndl13)
+replace(ndl13)
+get,ndl13.
+purge(ncffile/na)
+purge(lcffile/na)
+define(ncffile/ct=pr/ac=y)
+define(lcffile/ct=pr/ac=y)
+permit(lcffile,netops=w)
+permit(ncffile,netops=w)
+ndlp=i=ndl13.
+rewind(lcfm01)
+copyei(lcfm01,lcffile)
+~eor
+~include NDLSRC.txt
+~eof
+~eoi
