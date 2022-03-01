@@ -24,8 +24,20 @@ block./build/virgin/tape
 attach(opl=opl871)
 modify,i=modin.
 rewind(compile)
+rename(dsdecks=compile)
 define(vy2kds)
-libedit,p=tmpds,n=vy2kds,b=compile.
+* build vy2kds without FIXCLOK
+* because it is dtcyber specific
+note,vy2kmod./*yank fixclok/*edit mtr
+modify(i=vy2kmod)
+compass(a,i=compile,s=nostext)
+skipei(lgo)
+copyei(dsdecks,lgo)
+rewind(lgo)
+libedit(p=tmpds,n=vy2kds,b=lgo)
+rewind(vy2kds)
+itemize,vy2kds.
+return,compile,lgo,old,dsdecks.
 BLOCK./BUILD/Y2KDS WITH/NEW RECLDB
 * build new recldb ulib and merge it with tmpds into y2kds
 define(y2kds)
@@ -41,8 +53,10 @@ rewind(lgo)
 ulib,c,lgo,recldb.
 rewind(tmpds)
 return,lgo.
-* copy eqpd15 and iprd00 from running system.
+* copy eqpd15 and iprd00 cmrd15
+* from running system
 common(system)
+gtr(system,lgo)cmrd15
 gtr(system,lgo)eqpd15
 gtr(system,lgo)iprd00
 skipei(lgo)
