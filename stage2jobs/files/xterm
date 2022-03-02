@@ -1,0 +1,413 @@
+TDUXTRM          *** REMOVE THIS LINE WHEN USING AS INPUT TO *TDU*. ***
+  
+"   TERMINAL DEFINITION FILE FOR NCD16/NCD19 Xterminals with type ahead.      "
+"   Edited for modern XTerm by William Schaub                                 "
+"   This version changes FSE keymappings to be consistent with VT100 terminals"
+"   and teraterm pro                                                          "
+"   Terminal must use xterm with special .Xdefaults entry 'cyber'.            "
+  
+"                                                                             "
+"                 NCDX NOS Terminal Definition Key Mappings                   "
+"                                                                             "
+"                 Key       Modifier        Action                            "
+"             +------------------------------------------------+              "
+"             | F1 - F12  |          | F1 - F12                |              "
+"             |           | Shift    | F1 - F12 Shifted        |              "
+"             |------------------------------------------------|              "
+"             | F1 - F4   | Ctrl     | F13 - F16               |              "
+"             |           | Alt      | F13 - F16 Shifted       |              "
+"             |------------------------------------------------|              "
+"             | Insert    |          | Enter Insert Mode       |              "
+"             |           | Shift    | Insert Line             |              "
+"             |           | Ctrl     | Insert Character        |              "
+"             |------------------------------------------------|              "
+"             | Delete    |          | Delete Character        |              "
+"             |           | Shift    | Delete Line             |              "
+"             |------------------------------------------------|              "
+"             | Home      |          | Put Cursor on Home Line |              "
+"             |------------------------------------------------|              "
+"             | End       |          | Exit Insert Mode        |              "
+"             |           | Ctrl     | Delete to End of Line   |              "
+"             |------------------------------------------------|              "
+"             | Page Up   |          | Previous Screen         |              "
+"             |           | Shift    | Top                     |              "
+"             |           | Ctrl     | Half Page Forward       |              "
+"             |------------------------------------------------|              "
+"             | Page Down |          | Next Screen             |              "
+"             |           | Shift    | Bottom                  |              "
+"             |           | Ctrl     | Half Page Backward      |              "
+"             +------------------------------------------------+              "
+"                                                                             "
+"                                                                             "
+" The following file is required to enable the Unix host to use this TDU.     "
+" Extract it from this TDU and remove the double-quotes from each end of the  "
+" lines.  It can then be used on your Unix host when you use xterm.           "
+"                                                                             "
+"!------------------- Beginning of Unix file .Xdefaults ----------------------"
+"!                                                                            "
+"! Define cyber VT100 prefix, use xrdb .Xdefaults                             "
+"!                                                                            "
+"! Note: You must allow the c pre-processor to run on this file.              "
+"!       Do NOT use the -nocpp option on the xrdb command.                    "
+"!                                                                            "
+"!       To allow these key mappings to work, put them in a file on unix,     "
+"!       and execute the command:                                             "
+"!            xrdb whatever_filename_you_used                                 "
+"!       Then invoke an xterm like this:                                      "
+"!            xterm -name cyber -132 -j                                       "
+"!       The '-name cyber' specifies use of the cyber key mapping.            "
+"!       The '-132' specifies that switching to 132 column mode is allowed.   "
+"!       The '-j' specifies use of jump scrolling instead of smooth           "
+"!                scrolling (this is optional).                               "
+"!                                                                            "
+"#define CR string(0x0d)                                                      "
+"#define ESC string(0x1b)                                                     "
+"#define SH_FKEY string(0x1b) string([9)                                      "
+"#define PREFIX string(0x1b) string([)                                        "
+"cyber*scrollBar:          on                                                 "
+"cyber*saveLines:          150                                                "
+"cyber*borderWidth:        2                                                  "
+"cyber*font:               10x20                                              "
+"cyber*boldFont:           10x20B                                             "
+"cyber*VT100.geometry:     80x43                                              "
+"cyber*VT100.Translations:   #override\                                       "
+"     Alt<Key>F1:     SH_FKEY string(25~) CR    \n\                           "
+"    Ctrl<Key>F1:     PREFIX  string(25~) CR    \n\                           "
+"    Meta<Key>F1:                               \n\                           "
+"  Shift <Key>F1:     SH_FKEY string(11~) CR    \n\                           "
+"        <Key>F1:             insert()    CR    \n\                           "
+"     Alt<Key>F2:     SH_FKEY string(26~) CR    \n\                           "
+"    Ctrl<Key>F2:     PREFIX  string(26~) CR    \n\                           "
+"    Meta<Key>F2:                               \n\                           "
+"  Shift <Key>F2:     SH_FKEY string(12~) CR    \n\                           "
+"        <Key>F2:             insert()    CR    \n\                           "
+"     Alt<Key>F3:     SH_FKEY string(28~) CR    \n\                           "
+"    Ctrl<Key>F3:     PREFIX  string(28~) CR    \n\                           "
+"    Meta<Key>F3:                               \n\                           "
+"  Shift <Key>F3:     SH_FKEY string(13~) CR    \n\                           "
+"        <Key>F3:             insert()    CR    \n\                           "
+"     Alt<Key>F4:     SH_FKEY string(29~) CR    \n\                           "
+"    Ctrl<Key>F4:     PREFIX  string(29~) CR    \n\                           "
+"    Meta<Key>F4:                               \n\                           "
+"  Shift <Key>F4:     SH_FKEY string(14~) CR    \n\                           "
+"        <Key>F4:             insert()    CR    \n\                           "
+"     Alt<Key>F5:                               \n\                           "
+"    Ctrl<Key>F5:                               \n\                           "
+"    Meta<Key>F5:                               \n\                           "
+"  Shift <Key>F5:     SH_FKEY string(15~) CR    \n\                           "
+"        <Key>F5:             insert()    CR    \n\                           "
+"     Alt<Key>F6:                               \n\                           "
+"    Ctrl<Key>F6:                               \n\                           "
+"    Meta<Key>F6:                               \n\                           "
+"  Shift <Key>F6:     SH_FKEY string(17~) CR    \n\                           "
+"        <Key>F6:             insert()    CR    \n\                           "
+"     Alt<Key>F7:                               \n\                           "
+"    Ctrl<Key>F7:                               \n\                           "
+"    Meta<Key>F7:                               \n\                           "
+"  Shift <Key>F7:     SH_FKEY string(18~) CR    \n\                           "
+"        <Key>F7:             insert()    CR    \n\                           "
+"     Alt<Key>F8:                               \n\                           "
+"    Ctrl<Key>F8:                               \n\                           "
+"    Meta<Key>F8:                               \n\                           "
+"  Shift <Key>F8:     SH_FKEY string(19~) CR    \n\                           "
+"        <Key>F8:             insert()    CR    \n\                           "
+"     Alt<Key>F9:                               \n\                           "
+"    Ctrl<Key>F9:                               \n\                           "
+"    Meta<Key>F9:                               \n\                           "
+"  Shift <Key>F9:     SH_FKEY string(20~) CR    \n\                           "
+"        <Key>F9:             insert()    CR    \n\                           "
+"     Alt<Key>F10:                              \n\                           "
+"    Ctrl<Key>F10:                              \n\                           "
+"    Meta<Key>F10:                              \n\                           "
+"  Shift <Key>F10:    SH_FKEY string(21~) CR    \n\                           "
+"        <Key>F10:            insert()    CR    \n\                           "
+"     Alt<Key>F11:                              \n\                           "
+"    Ctrl<Key>F11:                              \n\                           "
+"    Meta<Key>F11:                              \n\                           "
+"  Shift <Key>F11:    SH_FKEY string(23~) CR    \n\                           "
+"        <Key>F11:            insert()    CR    \n\                           "
+"     Alt<Key>F12:                              \n\                           "
+"    Ctrl<Key>F12:                              \n\                           "
+"    Meta<Key>F12:                              \n\                           "
+"  Shift <Key>F12:    SH_FKEY string(24~) CR    \n\                           "
+"        <Key>F12:            insert()    CR    \n\                           "
+"        <Key>Home:   PREFIX  string(H)         \n\                           "
+"     Alt<Key>Prior:                            \n\                           "
+"    Ctrl<Key>Prior:  ESC SH_FKEY string(5~) CR \n\                           "
+"    Meta<Key>Prior:                            \n\                           "
+"   Shift<Key>Prior:  SH_FKEY string(5~)  CR    \n\                           "
+"        <Key>Prior:          insert()    CR    \n\                           "
+"     Alt<Key>End:                              \n\                           "
+"    Ctrl<Key>End:    PREFIX  string(K)         \n\                           "
+"    Meta<Key>End:                              \n\                           "
+"   Shift<Key>End:                              \n\                           "
+"        <Key>End:    PREFIX  string(4l)        \n\                           "
+"     Alt<Key>Next:                             \n\                           "
+"    Ctrl<Key>Next:   ESC SH_FKEY string(6~) CR \n\                           "
+"    Meta<Key>Next:                             \n\                           "
+"   Shift<Key>Next:   SH_FKEY string(6~)  CR    \n\                           "
+"        <Key>Next:           insert()    CR    \n\                           "
+"     Alt<Key>Insert:                           \n\                           "
+"    Ctrl<Key>Insert: PREFIX  string(@)         \n\                           "
+"    Meta<Key>Insert:                           \n\                           "
+"   Shift<Key>Insert: PREFIX  string(L)         \n\                           "
+"        <Key>Insert: PREFIX  string(4h)        \n\                           "
+"     Alt<Key>Delete:                           \n\                           "
+"    Ctrl<Key>Delete: PREFIX  string(P)         \n\                           "
+"    Meta<Key>Delete:                           \n\                           "
+"   Shift<Key>Delete: PREFIX  string(M)         \n\                           "
+"        <Key>Delete: PREFIX  string(P)                                       "
+"!                                                                            "
+"!---------------------- End of Unix file .Xdefaults -------------------------"
+  
+"   VARIABLES                                                                 "
+prefix              = (esc '[')
+sh_fkey             = (esc '[9')
+clear_all_tabs      = (prefix '3g')
+clear_home          = (prefix 'H' prefix 'J')
+enable_cursor_mode  = (prefix '?1l')
+enter_ansi_mode     = (esc '<')
+g0_us_characters    = (esc '(B')
+g1_graphics_chars   = (esc ')0')
+application_keypad  = (esc '=')
+numeric_keypad      = (esc '>')
+normal_attributes   = (prefix 'm')
+select_g0_char_set  = (si)
+set_80_cols         = (prefix '?3l')
+set_132_cols        = (prefix '?3h')
+start_alternate     = (prefix '1m')
+start_blink         = (prefix '5m')
+start_inverse       = (prefix '7m')
+start_underline     = (prefix '4m')
+stop_alternate      = (normal_attributes)
+stop_blink          = (normal_attributes)
+stop_inverse        = (normal_attributes)
+stop_underline      = (normal_attributes)
+wraparound_off      = (prefix '?7l')
+wraparound_on       = (prefix '?7h')
+start_insert_mode   = (prefix '4h')
+stop_insert_mode    = (prefix '4l')
+  
+"   MODEL NAME AND COMMUNICATION TYPE                                         "
+model_name          value = 'XTERM'
+communications      type  = asynch
+  
+"   END OF INFORMATION SPECIFICATION                                          "
+end_of_information  in    = (0)
+  
+"   CURSOR POSITIONING INFORMATION                                            "
+cursor_pos_encoding      bias  = (0)   type = ansi_cursor
+cursor_pos_column_first  value = FALSE
+cursor_pos_column_length value = (0)
+cursor_pos_row_length    value = (0)
+cursor_pos_begin         out   = (prefix)
+cursor_pos_second        out   = (';')
+cursor_pos_third         out   = ('H')
+  
+"   CURSOR MOVEMENT INFORMATION                                               "
+cursor_home              inout = (prefix 'H') label='Home'
+cursor_up                inout = (prefix 'A')
+cursor_down              inout = (prefix 'B')
+cursor_left              inout = (prefix 'D')
+cursor_right             inout = (prefix 'C')
+  
+"   CURSOR BEHAVIOR (for cursor movement keys)                                "
+move_past_right          type  = stop_next
+move_past_left           type  = stop_next
+move_past_top            type  = stop_next
+move_past_bottom         type  = stop_next
+  
+"   CURSOR BEHAVIOR (for character keys)                                      "
+char_past_right          type  = stop_next
+char_past_left           type  = stop_next
+char_past_last_position  type  = stop_next
+  
+"   TERMINAL ATTRIBUTES                                                       "
+attributes_not_maskable  value = TRUE
+clears_when_change_size  value = TRUE
+function_key_leaves_mark value = FALSE
+has_hidden               value = FALSE
+has_protect              value = FALSE
+home_at_top              value = TRUE
+multiple_sizes           value = TRUE
+tabs_to_home             value = FALSE
+tabs_to_tab_stops        value = TRUE
+tabs_to_unprotected      value = FALSE
+type_ahead               value = TRUE
+  
+"   SCREEN SIZES                                                              "
+set_size       rows = 43 columns = 80   out = (set_80_cols)
+set_size       rows = 43 columns = 132  out = (set_132_cols)
+  
+"   SCREEN AND LINE MODE TRANSITION                                           "
+set_screen_mode     out = (enter_ansi_mode stop_insert_mode clear_all_tabs ..
+     g0_us_characters g1_graphics_chars select_g0_char_set ..
+     wraparound_off enable_cursor_mode)
+  
+  
+set_line_mode     out = (enter_ansi_mode stop_insert_mode clear_all_tabs ..
+     g0_us_characters g1_graphics_chars select_g0_char_set ..
+     wraparound_on enable_cursor_mode)
+  
+"   TERMINAL CAPABILITIES                                                     "
+delete_char         inout = (prefix 'P')  label='Delete'
+delete_line_stay    inout = (prefix 'M')  label='Shift-Delete'
+erase_end_of_line   inout = (prefix 'K')  label='Ctrl-End'
+erase_line_stay     inout = (prefix '2K')
+erase_page_home       out = (clear_home)
+insert_char         inout = (prefix '@')  label='Ctrl-Insert'
+insert_line_stay    inout = (prefix 'L')  label='Shift-Insert'
+insert_mode_begin   inout = (start_insert_mode) label='Insert'
+insert_mode_end     inout = (stop_insert_mode)  label='End'
+tab_forward         inout = (ht)
+tab_clear_all       inout = (clear_all_tabs)
+tab_set             inout = (esc 'H')
+  
+"   MISCELLANEOUS TERMINAL SEQUENCES                                          "
+bell_nak            out = (bel)
+backspace           in = bs
+  
+"   PROGRAMMABLE FUNCTION KEY INPUT INFORMATION                               "
+f1        in = (prefix '11~') label='F1'
+f2        in = (prefix '12~') label='F2'
+f3        in = (prefix '13~') label='F3'
+f4        in = (prefix '14~') label='F4'
+f5        in = (prefix '15~') label='F5'
+f6        in = (prefix '17~') label='F6'
+f7        in = (prefix '18~') label='F7'
+f8        in = (prefix '19~') label='F8'
+f9        in = (prefix '20~') label='F9'
+f10       in = (prefix '21~') label='10'
+f11       in = (prefix '23~') label='11'
+f12       in = (prefix '24~') label='12'
+f13       in = (prefix '25~') label='C1'
+f14       in = (prefix '26~') label='C2'
+f15       in = (prefix '28~') label='C3'
+f16       in = (prefix '29~') label='C4'
+  
+f1_s      in = (sh_fkey '11~') label='  Sh'
+f2_s      in = (sh_fkey '12~') label='  Sh'
+f3_s      in = (sh_fkey '13~') label='  Sh'
+f4_s      in = (sh_fkey '14~') label='  Sh'
+f5_s      in = (sh_fkey '15~') label='  Sh'
+f6_s      in = (sh_fkey '17~') label='  Sh'
+f7_s      in = (sh_fkey '18~') label='  Sh'
+f8_s      in = (sh_fkey '19~') label='  Sh'
+f9_s      in = (sh_fkey '20~') label='  Sh'
+f10_s     in = (sh_fkey '21~') label='  Sh'
+f11_s     in = (sh_fkey '23~') label='  Sh'
+f12_s     in = (sh_fkey '24~') label='  Sh'
+f13_s     in = (sh_fkey '25~') label='A1'
+f14_s     in = (sh_fkey '26~') label='A2'
+f15_s     in = (sh_fkey '28~') label='A3'
+f16_s     in = (sh_fkey '29~') label='A4'
+  
+  
+  
+"   CDC STANDARD FUNCTION KEY INPUT INFORMATION                               "
+next      in = 13            label = 'RETURN'
+next_s    in = ()
+bkw       in = (prefix '5~') label='PU'
+fwd       in = (prefix '6~') label='PD'
+back      in = ()
+help      in = ()
+stop      in = ()
+bkw_s     in = (sh_fkey '5~') label='Shift-PU'
+fwd_s     in = (sh_fkey '6~') label='Shift-PD'
+stop_s    in = ()
+down      in = (esc sh_fkey '5~') label='Ctrl-PD'
+down_s    in = ()
+up        in = (esc sh_fkey '6~') label='Ctrl-PU'
+up_s      in = ()
+edit      in = ()
+edit_s    in = ()
+data      in = ()
+data_s    in = ()
+  
+"   TERMINAL VIDEO ATTRIBUTES                                                 "
+alt_begin           out = (start_alternate)
+alt_end             out = (stop_alternate)
+blink_begin         out = (start_blink)
+blink_end           out = (stop_blink)
+inverse_begin       out = (start_inverse)
+inverse_end         out = (stop_inverse)
+underline_begin     out = (start_underline)
+underline_end       out = (stop_underline)
+  
+"   LOGICAL ATTRIBUTE SPECIFICATIONS                                          "
+error_begin         out = (start_inverse)
+error_end           out = (stop_inverse)
+input_text_begin    out = (start_underline)
+input_text_end      out = (stop_underline)
+italic_begin        out = (start_inverse)
+italic_end          out = (stop_inverse)
+  
+"   LINE DRAWING CHARACTER SPECIFICATION                                      "
+ld_fine_begin            out = (so)
+ld_fine_end              out = (si)
+ld_fine_horizontal       out = 'q'
+ld_fine_vertical         out = 'x'
+ld_fine_upper_left       out = 'l'
+ld_fine_upper_right      out = 'k'
+ld_fine_lower_left       out = 'm'
+ld_fine_lower_right      out = 'j'
+ld_fine_up_t             out = 'w'
+ld_fine_down_t           out = 'v'
+ld_fine_left_t           out = 't'
+ld_fine_right_t          out = 'u'
+ld_fine_cross            out = 'n'
+ld_medium_begin          out = (so start_alternate)
+ld_medium_end            out = (si stop_alternate)
+ld_medium_horizontal     out = 'q'
+ld_medium_vertical       out = 'x'
+ld_medium_upper_left     out = 'l'
+ld_medium_upper_right    out = 'k'
+ld_medium_lower_left     out = 'm'
+ld_medium_lower_right    out = 'j'
+ld_medium_up_t           out = 'w'
+ld_medium_down_t         out = 'v'
+ld_medium_left_t         out = 't'
+ld_medium_right_t        out = 'u'
+ld_medium_cross          out = 'n'
+ld_bold_begin            out = (start_inverse)
+ld_bold_end              out = (stop_inverse)
+ld_bold_horizontal       out = (' ')
+ld_bold_vertical         out = (' ')
+ld_bold_upper_left       out = (' ')
+ld_bold_upper_right      out = (' ')
+ld_bold_lower_left       out = (' ')
+ld_bold_lower_right      out = (' ')
+ld_bold_up_t             out = (' ')
+ld_bold_down_t           out = (' ')
+ld_bold_left_t           out = (' ')
+ld_bold_right_t          out = (' ')
+ld_bold_cross            out = (' ')
+  
+"   DEFAULT KEY DEFINITIONS FOR THE FULL SCREEN EDITOR                        "
+    k1   = ('SK1/VNS/L/ FWD/;SKS1/VPS/L/ BKW/')
+    k2   = ('SK2/VN/L/LINEUP/;SKS2/VP/L/LINEDN/')
+    k3   = ('SK3/.I/L/ INSC/;SKS3/.D/L/ DELC/')
+    k4   = ('SK4/IBP1/L/ INSL/;SKS4/D;PN/L/ DELL/')
+    k5   = ('SK5/SM/L/ MARK/;SKS5/U/L/ UNDO/')
+    k6   = ('SK6/MMTP/L/ MOVE/;SKS6/CMTP/L/ COPY/')
+    k7   = ('SK7/H/L/ HELP/;SKS7/VH/L/ HOME/')
+    k8   = ('SK8/Q/L/ QUIT/;SKS8/SS/L/CLEAR/')
+    k9   = ('SK9/.E/L/ENDLIN/;SKS9/UM/L/UNMARK/')
+k10  = ('SK10/.E/L/ENDLIN/')
+k11  = ('SK11/.S/L/ SPLIT/')
+k12  = ('SK12/.J/L/ JOIN/')
+k13  = ('SK13/.F/L/ PARA/')
+k14  = ('SK14/CMTP/L/ COPY/')
+k15  = ('SK15/.C/L/CENTER/')
+  
+application_string...
+ name = ('FSEKEYS')...
+ out  = (k1 ';' k2 ';' k3 ';' k4 ';' k5)
+application_string...
+ name = ('FSEKEYS')...
+ out  = (k6 ';' k7 ';' k8 ';' k9 ';' k10)
+application_string...
+ name = ('FSEKEYS')...
+ out  = (k11 ';' k12 ';' k13 ';' k14 ';' k15 )
+  
+"   END OF TERMINAL DEFINITION FILE FOR NCD16/NCD19 Xterminals w/type ahead.  "
