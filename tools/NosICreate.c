@@ -8,6 +8,8 @@
 **      Convert individual files into NOS I-format TAP image with one
 **      logical record per file.
 **
+**  This version has been modified by William Schaub to add
+**  the EOF1 label required by NOS I format tapes. 
 **--------------------------------------------------------------------------
 */
 

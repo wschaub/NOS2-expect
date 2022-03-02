@@ -7,6 +7,8 @@
 **  Description:
 **      Verify NOS I-format TAP image.
 **
+** This version has been modified by Wiliam Schaub to display
+** ANSI tape labels. 
 **--------------------------------------------------------------------------
 */
 
