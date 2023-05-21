@@ -275,6 +275,7 @@ int main (int argc, char *argv[])
                 if (recLen1 == 80)
                     {
                     printf ("ANSI label: %80s\n", rawBuffer);
+                    expectedBlockNumber = 0;
                     continue;
                     }
                 begin = 0;
